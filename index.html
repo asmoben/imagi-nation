@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Imagi Nations | Adventures in Education</title>
+  <meta name="description" content="Imagi Nations transforms home education into immersive storytelling adventures through role-playing, literacy, creativity, and collaborative learning." />
+  <style>
+    :root {
+      --ink: #2d2118;
+      --muted: #6f5843;
+      --gold: #b88735;
+      --deep: #24150f;
+      --cream: #f4ead2;
+      --paper: rgba(255, 247, 225, 0.92);
+      --shadow: rgba(34, 18, 8, 0.35);
+      --green: #40513b;
+      --red: #7c2d20;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--ink);
+      background:
+        linear-gradient(rgba(18, 10, 5, 0.58), rgba(18, 10, 5, 0.72)),
+        url("https://assets.forge-vtt.com/65e70ddcf8447871c18a2b4d/imagi/education/dragon%20cave.png") center / cover fixed;
+      line-height: 1.65;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(12px);
+      background: rgba(36, 21, 15, 0.86);
+      border-bottom: 1px solid rgba(184, 135, 53, 0.45);
+    }
+
+    .nav {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 14px 0;
+      color: var(--cream);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .brand img {
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
+      mix-blend-mode: screen;
+    }
+
+    .navlinks {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      font-size: 0.95rem;
+    }
+
+    .navlinks a {
+      text-decoration: none;
+      opacity: 0.9;
+    }
+
+    .navlinks a:hover {
+      color: #ffd88a;
+    }
+
+    .hero {
+      min-height: 88vh;
+      display: grid;
+      place-items: center;
+      padding: 80px 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 220px;
+      background: linear-gradient(transparent, rgba(18, 10, 5, 0.95));
+      pointer-events: none;
+    }
+
+    .hero-card {
+      position: relative;
+      z-index: 2;
+      width: min(980px, 100%);
+      padding: clamp(28px, 6vw, 74px);
+      background: var(--paper);
+      border: 8px double rgba(102, 61, 25, 0.62);
+      border-radius: 28px;
+      box-shadow: 0 30px 80px var(--shadow);
+      text-align: center;
+    }
+
+    .eyebrow {
+      color: var(--red);
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    h1, h2, h3 {
+      line-height: 1.12;
+      margin: 0 0 16px;
+    }
+
+    h1 {
+      font-size: clamp(3rem, 9vw, 7.2rem);
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .subtitle {
+      font-size: clamp(1.35rem, 3vw, 2rem);
+      color: var(--green);
+      font-weight: 700;
+      margin-bottom: 22px;
+    }
+
+    .hero p {
+      max-width: 780px;
+      margin: 0 auto 30px;
+      font-size: 1.15rem;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: center;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 12px 22px;
+      border-radius: 999px;
+      border: 2px solid var(--deep);
+      background: var(--deep);
+      color: var(--cream);
+      text-decoration: none;
+      font-weight: 800;
+      box-shadow: 0 8px 18px rgba(36, 21, 15, 0.28);
+    }
+
+    .button.secondary {
+      background: transparent;
+      color: var(--deep);
+    }
+
+    section {
+      padding: 82px 16px;
+    }
+
+    .wrap {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+    }
+
+    .paper {
+      background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.45), transparent 36%),
+        var(--paper);
+      border: 5px double rgba(102, 61, 25, 0.52);
+      border-radius: 24px;
+      box-shadow: 0 24px 60px var(--shadow);
+      padding: clamp(24px, 4vw, 48px);
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 38px;
+    }
+
+    .section-title h2 {
+      font-size: clamp(2rem, 5vw, 3.8rem);
+      text-transform: uppercase;
+    }
+
+    .section-title p {
+      max-width: 760px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 1.08rem;
+    }
+
+    .grid {
+      display: grid;
+      gap: 22px;
+    }
+
+    .grid.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid.three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .card {
+      background: rgba(255, 250, 236, 0.88);
+      border: 1px solid rgba(102, 61, 25, 0.28);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.45);
+    }
+
+    .card h3 {
+      color: var(--red);
+      font-size: 1.35rem;
+    }
+
+    ul {
+      padding-left: 20px;
+      margin: 0;
+    }
+
+    .feature-image {
+      min-height: 420px;
+      border-radius: 24px;
+      background: url("https://assets.forge-vtt.com/65e70ddcf8447871c18a2b4d/imagi/education/unicorns%201.png") center / cover;
+      box-shadow: 0 22px 55px var(--shadow);
+      border: 5px double rgba(244, 234, 210, 0.75);
+    }
+
+    .process-list {
+      counter-reset: steps;
+      display: grid;
+      gap: 16px;
+    }
+
+    .step {
+      counter-increment: steps;
+      position: relative;
+      padding: 20px 20px 20px 78px;
+      background: rgba(255, 250, 236, 0.84);
+      border-radius: 18px;
+      border: 1px solid rgba(102, 61, 25, 0.22);
+    }
+
+    .step::before {
+      content: counter(steps);
+      position: absolute;
+      left: 20px;
+      top: 20px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--deep);
+      color: var(--cream);
+      font-weight: 900;
+    }
+
+    .pricing {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .price-card {
+      position: relative;
+      overflow: hidden;
+      background: rgba(255, 250, 236, 0.94);
+      border: 3px solid rgba(184, 135, 53, 0.55);
+      border-radius: 22px;
+      padding: 28px;
+      text-align: center;
+    }
+
+    .price-card.featured {
+      transform: translateY(-8px);
+      border-color: var(--red);
+      box-shadow: 0 24px 55px rgba(124, 45, 32, 0.22);
+    }
+
+    .price {
+      font-size: 2.7rem;
+      font-weight: 900;
+      color: var(--red);
+      line-height: 1;
+      margin: 18px 0 8px;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 16px;
+      background: rgba(255, 250, 236, 0.92);
+    }
+
+    th, td {
+      padding: 16px;
+      border-bottom: 1px solid rgba(102, 61, 25, 0.18);
+      text-align: left;
+    }
+
+    th {
+      background: rgba(36, 21, 15, 0.92);
+      color: var(--cream);
+    }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    blockquote {
+      margin: 0;
+      font-size: 1.02rem;
+    }
+
+    .quote-name {
+      margin-top: 14px;
+      color: var(--red);
+      font-weight: 900;
+    }
+
+    .sessions {
+      color: var(--muted);
+      font-style: italic;
+      font-size: 0.92rem;
+    }
+
+    .cta {
+      text-align: center;
+      background:
+        linear-gradient(rgba(36, 21, 15, 0.7), rgba(36, 21, 15, 0.74)),
+        url("https://assets.forge-vtt.com/65e70ddcf8447871c18a2b4d/imagi/education/pirate%20cove%201.png") center / cover;
+      color: var(--cream);
+    }
+
+    .cta .paper {
+      background: rgba(36, 21, 15, 0.86);
+      border-color: rgba(244, 234, 210, 0.42);
+    }
+
+    .cta h2 {
+      font-size: clamp(2.1rem, 5vw, 4.2rem);
+    }
+
+    footer {
+      padding: 28px 16px;
+      background: var(--deep);
+      color: var(--cream);
+      text-align: center;
+      font-size: 0.95rem;
+    }
+
+    .art-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 26px;
+    }
+
+    .art-strip img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 18px;
+      border: 3px double rgba(102, 61, 25, 0.38);
+      box-shadow: 0 10px 22px rgba(36, 21, 15, 0.22);
+    }
+
+    @media (max-width: 900px) {
+      .grid.two,
+      .grid.three,
+      .pricing,
+      .testimonial-grid,
+      .art-strip {
+        grid-template-columns: 1fr;
+      }
+
+      .feature-image {
+        min-height: 300px;
+      }
+
+      .nav {
+        align-items: flex-start;
+      }
+
+      .navlinks {
+        display: none;
+      }
+
+      .price-card.featured {
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="brand" href="#top">
+        <img src="https://i.imgur.com/jsYeKeN.png" alt="Imagi Nations emblem" />
+        <span>Imagi Nations</span>
+      </a>
+      <div class="navlinks">
+        <a href="#about">About</a>
+        <a href="#benefits">Benefits</a>
+        <a href="#process">Process</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-card">
+        <div class="eyebrow">Adventures in Education</div>
+        <h1>Imagi Nations</h1>
+        <div class="subtitle">Home education through storytelling, role-play, and imagination.</div>
+        <p>Immersive educational adventures for home education families, blending literacy, creativity, confidence, teamwork, problem-solving, and subject learning into unforgettable stories where every child becomes the hero of their own learning journey.</p>
+        <div class="buttons">
+          <a class="button" href="#contact">Arrange a Consultation</a>
+          <a class="button secondary" href="#pricing">View Pricing</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="wrap paper">
+        <div class="section-title">
+          <h2>Welcome to Our World</h2>
+          <p>Imagi Nations is a bespoke educational storytelling service created for home education families and independent learners.</p>
+        </div>
+        <div class="grid two">
+          <div>
+            <p>Our professional Storytellers create interactive role-playing adventures inspired by fantasy, mythology, history, mystery, science, and your child’s imagination.</p>
+            <p>Every session can be tailored to your child’s interests, educational goals, learning pace, and preferred subjects. Whether your focus is English practice, creative writing, history, science, mythology, confidence building, or nurturing a love of learning, the adventure adapts around your family.</p>
+            <p>Using collaborative storytelling and virtual tabletop technology, learners explore magical worlds, solve mysteries, overcome challenges, and grow in confidence within a safe and supportive environment.</p>
+          </div>
+          <div class="feature-image" role="img" aria-label="Fantasy unicorn artwork"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="benefits">
+      <div class="wrap paper">
+        <div class="section-title">
+          <h2>Educational Benefits</h2>
+          <p>Learning feels most powerful when children are actively participating in the story.</p>
+        </div>
+        <div class="grid three">
+          <article class="card">
+            <h3>Vocabulary & Language</h3>
+            <p>Children naturally encounter and practise new vocabulary through dialogue, puzzles, descriptions, role-play, and creative problem-solving.</p>
+          </article>
+          <article class="card">
+            <h3>Creative Thinking</h3>
+            <p>Adventurers solve challenges, make meaningful choices, and explore imaginative solutions throughout each session.</p>
+          </article>
+          <article class="card">
+            <h3>Reading & Listening</h3>
+            <p>Interactive storytelling encourages attentive listening, comprehension, narration, and confidence in communication.</p>
+          </article>
+          <article class="card">
+            <h3>Memory & Focus</h3>
+            <p>Remembering characters, clues, locations, and story events strengthens short-term and long-term memory.</p>
+          </article>
+          <article class="card">
+            <h3>Social & Emotional Learning</h3>
+            <p>Role-playing different perspectives helps children develop empathy, communication skills, and emotional understanding.</p>
+          </article>
+          <article class="card">
+            <h3>Confidence Building</h3>
+            <p>Children are encouraged to share ideas, make choices, and express themselves creatively in a supportive space.</p>
+          </article>
+        </div>
+        <div class="art-strip" aria-label="Artwork from Imagi Nations materials">
+          <img src="https://assets.forge-vtt.com/65e70ddcf8447871c18a2b4d/imagi/education/Gemini_Generated_Image_qk5n4jqk5n4jqk5n.png" alt="Fantasy education artwork" />
+          <img src="https://assets.forge-vtt.com/65e70ddcf8447871c18a2b4d/imagi/education/Gemini_Generated_Image_k0n7xxk0n7xxk0n7.png" alt="Adventure artwork" />
+          <img src="https://assets.forge-vtt.com/65e70ddcf8447871c18a2b4d/imagi/education/Gemini_Generated_Image_j2xuc8j2xuc8j2xu.png" alt="Storytelling artwork" />
+          <img src="https://assets.forge-vtt.com/65e70ddcf8447871c18a2b4d/imagi/education/blind%20jack.png" alt="Character artwork" />
+        </div>
+      </div>
+    </section>
+
+    <section id="process">
+      <div class="wrap paper">
+        <div class="section-title">
+          <h2>How the Adventure Begins</h2>
+          <p>Every programme is custom-built around your child, your educational goals, and the themes that excite your family.</p>
+        </div>
+        <div class="process-list">
+          <div class="step"><strong>Family Consultation.</strong> We discuss your child’s interests, confidence level, educational focus, and preferred themes.</div>
+          <div class="step"><strong>Educational Alignment.</strong> We weave in subjects such as English, history, mythology, science, creative writing, social development, or problem-solving.</div>
+          <div class="step"><strong>Vocabulary Integration.</strong> Key words and learning themes become part of the story through dialogue, puzzles, magical artefacts, and interactive challenges.</div>
+          <div class="step"><strong>Story Customisation.</strong> Adventures may include dragons, pirates, mysteries, historical quests, enchanted forests, fantasy kingdoms, or your child’s favourite ideas.</div>
+          <div class="step"><strong>Adventure Delivery.</strong> The final session is delivered online through Foundry Virtual Tabletop with interactive maps, characters, and guided storytelling.</div>
+          <div class="step"><strong>Continued Growth.</strong> Parent and learner feedback helps future sessions evolve alongside the child’s learning journey.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing">
+      <div class="wrap paper">
+        <div class="section-title">
+          <h2>Programme Pricing</h2>
+          <p>Choose from a full 12-week bespoke programme, a single 1:1 educational adventure session, or a small collaborative group session.</p>
+        </div>
+        <div class="pricing">
+          <article class="price-card featured">
+            <h3>Founding Family Discount</h3>
+            <p class="small">For the full Standard 12-Week Programme</p>
+            <div class="small"><s>Standard Value: £2960–£3720</s></div>
+            <div class="price">£1600</div>
+            <p class="small"><strong>Reduced first-term founding family price</strong></p>
+            <ul>
+              <li>12-week immersive educational adventure</li>
+              <li>4 hours per week</li>
+              <li>Fully bespoke educational storytelling programme</li>
+              <li>Professional Foundry VTT setup</li>
+              <li>Interactive maps, characters, and worldbuilding</li>
+              <li>Includes creative development and session delivery</li>
+            </ul>
+          </article>
+          <article class="price-card">
+            <h3>Single 1:1 Session</h3>
+            <div class="price">£125</div>
+            <p class="small">One private educational adventure session</p>
+            <ul>
+              <li>Designed for one learner</li>
+              <li>Personalised storytelling experience</li>
+              <li>Ideal as a taster session</li>
+              <li>Can support literacy, confidence, creativity, or subject themes</li>
+              <li>Delivered online via Foundry Virtual Tabletop</li>
+            </ul>
+          </article>
+          <article class="price-card">
+            <h3>Small Group Sessions</h3>
+            <div class="price">£20–£25</div>
+            <p class="small">Per student</p>
+            <ul>
+              <li>3–4 students: £25 per student</li>
+              <li>5–6 students: £20 per student</li>
+              <li>Maximum 6 learners per session</li>
+              <li>Team-based challenges</li>
+              <li>Collaborative storytelling and social confidence</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="reviews">
+      <div class="wrap paper">
+        <div class="section-title">
+          <h2>Community Feedback</h2>
+          <p>28+ public reviews from returning players and long-term campaign participants.</p>
+        </div>
+        <div class="testimonial-grid">
+          <article class="card">
+            <blockquote>“One of the best Game Masters I have had the honor to play with! Vivid homebrew worlds with more lore than you can imagine.”</blockquote>
+            <div class="quote-name">Alice</div>
+            <div class="sessions">Played 68 sessions</div>
+          </article>
+          <article class="card">
+            <blockquote>“Fun, brilliant, beautiful artwork, great narration.”</blockquote>
+            <div class="quote-name">John</div>
+            <div class="sessions">Played 50 sessions</div>
+          </article>
+          <article class="card">
+            <blockquote>“DM Asmo creates truly personalized campaigns that are engaging, immersive, and full of memorable moments. He listens to the group, adapts to our choices, and makes every session exciting and fun.”</blockquote>
+            <div class="quote-name">Paige</div>
+            <div class="sessions">Played 34 sessions</div>
+          </article>
+          <article class="card">
+            <blockquote>“Asmo is an incredible and experienced GM. He is very descriptive and manages player roleplaying scenes very well. He is well prepared and has great improv skills. Highly recommended!”</blockquote>
+            <div class="quote-name">Nikolas</div>
+            <div class="sessions">Played 32 sessions</div>
+          </article>
+          <article class="card">
+            <blockquote>“What a great table — 10/10. Using Foundry’s full potential and incredible attention to detail, Asmo brings true life to his games.”</blockquote>
+            <div class="quote-name">2d20</div>
+            <div class="sessions">Played 13 sessions</div>
+          </article>
+          <article class="card">
+            <blockquote>“Awesome guy and very understanding and accommodating.”</blockquote>
+            <div class="quote-name">Brandon Waldrop</div>
+            <div class="sessions">Played 11 sessions</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="cta">
+      <div class="wrap paper">
+        
+        <h2>Ready to Begin the Adventure?</h2>
+        <p>Choose Dracouroboros and Imagi Nations for a home education experience where imagination leads the way.</p>
+        <p><strong>Email:</strong> <a href="mailto:ben.v@imagi-nations.com">ben.v@imagi-nations.com</a></p>
+        <div class="buttons">
+          <a class="button" href="mailto:ben.v@imagi-nations.com?subject=Imagi%20Nations%20Consultation">Book a Consultation</a>
+          <a class="button secondary" href="#top">Back to Top</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <strong>DRACOUROBOROS</strong> · Imagi Nations · Learning should feel like an adventure.
+  </footer>
+</body>
+</html>
